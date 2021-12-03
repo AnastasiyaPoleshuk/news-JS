@@ -1,15 +1,20 @@
 import './news.css';
+import { INewsData }  from "./interfaces";
 
-class News {
-    draw(data) {
-        const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
+interface INews{
+    draw(data: INewsData []): void,
+}
 
-        const fragment = document.createDocumentFragment();
-        const newsItemTemp = document.querySelector('#newsItemTemp');
+class News implements INews{
+
+    draw(data: INewsData []) {
+        const news: INewsData [] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
+
+        const fragment: DocumentFragment = document.createDocumentFragment();
+        const newsItemTemp: HTMLMetaElement = document.querySelector('#newsItemTemp');
 
         news.forEach((item, idx) => {
             const newsClone = newsItemTemp.content.cloneNode(true);
-
             if (idx % 2) newsClone.querySelector('.news__item').classList.add('alt');
 
             newsClone.querySelector('.news__meta-photo').style.backgroundImage = `url(${

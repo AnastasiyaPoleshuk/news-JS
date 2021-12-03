@@ -13,8 +13,15 @@ const baseConfig = {
             },
             {
                 test: /\.tsx?$/i,
-                use: 'ts-loader',
-                exclude: /node_modules/, 
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: path.resolve('./tsconfig.json'),
+                        },
+                    },
+                ], 
             },
         ],
     },

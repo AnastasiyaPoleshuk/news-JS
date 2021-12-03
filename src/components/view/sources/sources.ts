@@ -1,9 +1,15 @@
 import './sources.css';
+import { INewsData }  from "../news/interfaces";
 
-class Sources {
-    draw(data) {
-        const fragment = document.createDocumentFragment();
-        const sourceItemTemp = document.querySelector('#sourceItemTemp');
+interface INews{
+    draw(data: INewsData []): void,
+}
+
+class Sources implements INews{
+
+    draw(data: INewsData []) {
+        const fragment: DocumentFragment = document.createDocumentFragment();
+        const sourceItemTemp: HTMLMetaElement = document.querySelector('#sourceItemTemp');
 
         data.forEach((item) => {
             const sourceClone = sourceItemTemp.content.cloneNode(true);
