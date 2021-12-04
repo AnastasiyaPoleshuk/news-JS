@@ -1,16 +1,24 @@
 import AppLoader from './appLoader';
+import { IMakeUrlParam } from './interfaces/ILoader';
 
-class AppController extends AppLoader {
-    getSources(callback) {
+export interface IAppController{
+    getSources(calback: (data: object) => void): void,
+    getNews(e: object, calback: (data: object) => void): void, 
+}
+
+class AppController extends AppLoader implements IAppController {
+    getSources(callback): void {
+        const param: IMakeUrlParam = {
+            endpoint: 'sources',
+            options: {},
+        } ;
         super.getResp(
-            {
-                endpoint: 'sources',
-            },
+            param,
             callback
         );
     }
 
-    getNews(e, callback) {
+    getNews(e, callback): void {
         let target = e.target;
         const newsContainer = e.currentTarget;
 
@@ -37,3 +45,7 @@ class AppController extends AppLoader {
 }
 
 export default AppController;
+// function IMakeUrlParam(arg0: { endpoint: string; }, IMakeUrlParam: any, callback: any) {
+//     throw new Error('Function not implemented.');
+// }
+
