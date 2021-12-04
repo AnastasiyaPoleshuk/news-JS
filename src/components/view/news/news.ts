@@ -15,7 +15,7 @@ class News implements IView{
             if (idx % 2) newsClone.querySelector('.news__item').classList.add('alt');
 
             const url = `url(${item.urlToImage || 'img/news_placeholder.jpg'})`;
-            newsClone.querySelector('.news__meta-photo').setAttribute('style', `backgroundImage=${url}` );
+            newsClone.querySelector('.news__meta-photo').setAttribute('style', `background-image:${url}` );
             newsClone.querySelector('.news__meta-author').textContent = item.author || item.name;
             newsClone.querySelector('.news__meta-date').textContent = item.publishedAt
                 .slice(0, 10)
