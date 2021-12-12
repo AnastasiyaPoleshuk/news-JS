@@ -2,7 +2,6 @@ const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
 const baseConfig = {
     entry: path.resolve(__dirname, './src/index.js'),
     mode: 'development',
@@ -12,14 +11,26 @@ const baseConfig = {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
             },
+            {
+                test: /\.tsx?$/i,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: path.resolve('./tsconfig.json'),
+                        },
+                    },
+                ], 
+            },
         ],
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, '../dist'),
+        path: path.resolve(__dirname, './dist'),
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -33,6 +44,5 @@ const baseConfig = {
 module.exports = ({ mode }) => {
     const isProductionMode = mode === 'prod';
     const envConfig = isProductionMode ? require('./webpack.prod.config') : require('./webpack.dev.config');
-
     return merge(baseConfig, envConfig);
 };
