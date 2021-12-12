@@ -1,35 +1,32 @@
-import { IResult } from "./interfaces/IResult";
 import { ILoader } from "./interfaces/ILoader";
-import { IMakeUrlParam } from "./interfaces/ILoader"
-import { IArticle } from "../view/interfases/interfaces";
+import { IMakeUrlParam } from "./interfaces/ILoader";
+import { ISouces } from "../view/sources/ISources";
+import { INews } from "../view/news/INews";
 
-export enum HttpResponsesStatus{
+export enum HttpResponseStatus{
     Unauthorized = 401,
     NotFound = 404,
 }
 
 class Loader implements ILoader{
 
-    baseLink: string;
-    options: object;
-    param: IMakeUrlParam;
-    constructor(baseLink: string, options: object) {
+    constructor(public baseLink: string, public options: object) {
         this.baseLink = baseLink;
         this.options = options;
     }
 
     getResp(
         param: IMakeUrlParam,
-        callback = () => {
+        callback = (data?) => {
             console.error('No callback for GET response');
         }
     ){
         this.load('GET', param, callback);
     }
 
-    errorHandler(res: IResult) {
+    errorHandler(res: Response) {
         if (!res.ok) {
-            if (res.status === HttpResponsesStatus.Unauthorized || res.status === HttpResponsesStatus.NotFound)
+            if (res.status === HttpResponseStatus.Unauthorized || res.status === HttpResponseStatus.NotFound)
                 console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
             throw Error(res.statusText);
         }
@@ -48,7 +45,7 @@ class Loader implements ILoader{
         return url.slice(0, -1);
     }
 
-    load(method: string, param: IMakeUrlParam, callback: (data: IArticle) => void) {
+    load(method: string, param: IMakeUrlParam, callback: (data: ISouces | INews) => void) {
         fetch(this.makeUrl(param), { method })
             .then(this.errorHandler)
             .then((res) => res.json())

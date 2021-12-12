@@ -1,11 +1,11 @@
 import './news.css';
-import { IArticle }  from "../interfases/interfaces";
 import { IView }  from "../interfases/Iview";
+import { INews } from "./INews"
 
 class News implements IView{
 
-    draw(data: IArticle []) {
-        const news: IArticle [] = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
+    draw(data: INews []) {
+        const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
         const fragment: DocumentFragment = document.createDocumentFragment();
         const newsItemTemp: HTMLTemplateElement = document.querySelector('#newsItemTemp');

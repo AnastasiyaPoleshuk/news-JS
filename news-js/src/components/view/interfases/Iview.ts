@@ -1,5 +1,6 @@
-import { IArticle }  from "./interfaces";
+import { ISouces } from "../sources/ISources";
+import { INews } from "../news/INews";
 
 export interface IView{
-    draw(data: IArticle []): void,
+    draw(data: ISouces [] | INews []): void,
 }
